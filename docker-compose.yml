@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+      args:
+        TIMEZONE: UTC
+    volumes:
+      - ./:/var/www/slot-a
+    networks:
+      - slot-a
+
+networks:
+  slot-a:
