@@ -10,7 +10,7 @@ class MatchSymbolsTest extends TestCase
     /**
      * Added test to show how I would write test, obviously more tests would be required here
      */
-    public function testBetIsCorrectOnBigWin()
+    public function testWinIsCorrectOnMatchFive()
     {
         $this->app->instance(
             RandomizerContract::class,
