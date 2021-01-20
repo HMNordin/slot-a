@@ -20,12 +20,8 @@ class SymbolCollection
     /** @var Collection */
     protected $columns;
 
-    /** @var int */
-    protected $row;
-
-    public function __construct(int $row)
+    public function __construct()
     {
-        $this->row = $row;
         $this->columns = collect();
     }
 
@@ -39,23 +35,30 @@ class SymbolCollection
         return $this->columns;
     }
 
-    public function generate(RandomizerContract $randomizer, int $amount = self::COLUMN_COUNT): void
+    public function generate(RandomizerContract $randomizer, int $row, int $amount = self::COLUMN_COUNT): void
     {
         for ($i = 0; $i < $amount; $i++) {
             $random = $randomizer->getRandom()->first();
-            $this->addColumn(new Symbol($random, $this->getNumber($i)));
+            $this->addColumn(new Symbol($random, $this->getNumber($i, $row)));
         }
     }
 
-    protected function getNumber(int $column): int
+    protected function getNumber(int $column, int $row): int
     {
-        return self::NUMBERING[$column] + $this->row;
+        return self::NUMBERING[$column] + $row;
+    }
+
+    public function find(int $number): ?Symbol
+    {
+        return $this->columns->filter(function (Symbol $symbol) use ($number) {
+            return $symbol->getNumber() === $number;
+        })->first();
     }
 
     public function toArray(): array
     {
         return $this->getColumns()->map(function (Symbol $symbol) {
-            return $symbol->getSymbol();
+            return $symbol->getSymbol() . " pos ". $symbol->getNumber();
         })->toArray();
     }
 }

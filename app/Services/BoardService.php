@@ -29,13 +29,15 @@ class BoardService
 
     public function generate(int $amount = self::ROW_COUNT): void
     {
-        for ($i = 0; $i < $amount; $i++) {
-            $symbolCollection = new SymbolCollection($i);
-            $symbolCollection->generate($this->randomizeService);
+        $symbolCollection = new SymbolCollection();
 
-            $this->board->addRow($symbolCollection);
+        for ($i = 0; $i < $amount; $i++) {
+            $symbolCollection->generate($this->randomizeService, $i);
         }
+
+        $this->board->setSymbolCollection($symbolCollection);
     }
+
     public function getBoard(): Board
     {
         return $this->board;

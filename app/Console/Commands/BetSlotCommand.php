@@ -3,16 +3,18 @@
 namespace App\Console\Commands;
 
 use App\Services\BoardService;
-use App\Symbol;
-use App\SymbolCollection;
 use Illuminate\Console\Command;
-use Illuminate\Support\Arr;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
 
-class GenerateHandCommand extends Command
+class BetSlotCommand extends Command
 {
+    const PAYLINES = [
+        [0, 3, 6, 9, 12],
+        [1, 4, 7, 10, 13],
+        [2, 5, 8, 11, 14],
+        [0, 4, 8, 10, 12],
+        [2, 4, 6, 10, 14],
+    ];
+
     /**
      * The name and signature of the console command.
      *
@@ -34,10 +36,16 @@ class GenerateHandCommand extends Command
 
         $board = $boardService->getBoard();
 
+        $bet = 100;
+        $board->bet(self::PAYLINES, $bet);
+
         $response = [
-            'board' => Arr::flatten($board->toArray()),
+            'board' => $board->toArray(),
+            'paylines' => $board->getMatchedPaylines()->toArray(),
+            'bet_amount' => $bet,
+            'total_win' => $board->getWin(),
         ];
 
-        $this->info(json_encode($response));
+        $this->info(json_encode($response, JSON_PRETTY_PRINT));
     }
 }
