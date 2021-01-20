@@ -58,13 +58,11 @@ class Board
     {
         foreach ($paylines as $payline) {
             $matched = $this->findMatch($payline);
-            if ($matched >= 3) {
-                $this->matched->add([
-                    implode(',', $payline) => $matched,
-                ]);
+            $this->matched->add([
+                implode(',', $payline) => $matched,
+            ]);
 
-                $this->winnings += $this->calculateWin($bet, $matched);
-            }
+            $this->winnings += $this->calculateWin($bet, $matched);
         }
 
         return $this;
@@ -80,6 +78,10 @@ class Board
      */
     protected function calculateWin(int $bet, int $matched): int
     {
+        if ($matched < 3) {
+            return 0;
+        }
+
         return self::WIN_RATIO[$matched] * $bet;
     }
 

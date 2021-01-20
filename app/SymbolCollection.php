@@ -78,7 +78,7 @@ class SymbolCollection
     public function toArray(): array
     {
         return $this->getColumns()->map(function (Symbol $symbol) {
-            return $symbol->getSymbol() . " pos ". $symbol->getNumber();
+            return $symbol->getSymbol();
         })->toArray();
     }
 }

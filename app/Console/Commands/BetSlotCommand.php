@@ -7,6 +7,10 @@ use Illuminate\Console\Command;
 
 class BetSlotCommand extends Command
 {
+    /**
+     * Configured paylines add more here
+     * to increase chances of winning
+     */
     const PAYLINES = [
         [0, 3, 6, 9, 12],
         [1, 4, 7, 10, 13],
@@ -20,14 +24,14 @@ class BetSlotCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'generate';
+    protected $signature = 'bet';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'generate board';
+    protected $description = 'Bets on the slot game';
 
     public function handle()
     {
