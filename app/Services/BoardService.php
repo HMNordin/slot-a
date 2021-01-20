@@ -24,10 +24,10 @@ class BoardService
 
     public static function make(): self
     {
-        return app()->make(self::class);
+        return app(self::class);
     }
 
-    public function generate(int $amount = self::ROW_COUNT): void
+    public function generate(int $amount = self::ROW_COUNT): self
     {
         $symbolCollection = new SymbolCollection();
 
@@ -36,6 +36,8 @@ class BoardService
         }
 
         $this->board->setSymbolCollection($symbolCollection);
+
+        return $this;
     }
 
     public function getBoard(): Board

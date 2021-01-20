@@ -31,13 +31,10 @@ class BetSlotCommand extends Command
 
     public function handle()
     {
-        $boardService = BoardService::make();
-        $boardService->generate();
-
-        $board = $boardService->getBoard();
-
+        $boardService = BoardService::make()->generate();
         $bet = 100;
-        $board->bet(self::PAYLINES, $bet);
+
+        $board = $boardService->getBoard()->bet(self::PAYLINES, $bet);
 
         $response = [
             'board' => $board->toArray(),
