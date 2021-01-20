@@ -95,6 +95,7 @@ $app->configure('app');
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
+$app->instance(\App\Contracts\RandomizerContract::class, new \App\Services\RandomService(config('app.random_elements')));
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
